@@ -1,0 +1,363 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Hands-On AI Notebooks</title>
+<meta name="description" content="Six interactive notebooks that teach core AI ideas by letting you change things and watch what happens. They run in a browser on JupyterHub or Google Colab.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;700&family=Fraunces:opsz,wght@9..144,500;9..144,700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #fbf8f3;
+    --surface: #ffffff;
+    --ink: #1c2230;
+    --muted: #5b6472;
+    --line: #e6dfd3;
+    --accent: #0b6b6b;
+    --accent-ink: #ffffff;
+    --accent-soft: #dcefec;
+    --warm: #f6ead2;
+    --serif: "Fraunces", Georgia, "Times New Roman", serif;
+    --sans: "DM Sans", system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) {
+      --bg: #14181f; --surface: #1b212b; --ink: #eef0f3; --muted: #a4adba;
+      --line: #2a3240; --accent: #5fc1b8; --accent-ink: #0e1a19;
+      --accent-soft: #1c3434; --warm: #2a2417;
+    }
+  }
+  :root[data-theme="dark"] {
+    --bg: #14181f; --surface: #1b212b; --ink: #eef0f3; --muted: #a4adba;
+    --line: #2a3240; --accent: #5fc1b8; --accent-ink: #0e1a19;
+    --accent-soft: #1c3434; --warm: #2a2417;
+  }
+
+  * { box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+  body {
+    margin: 0;
+    background: var(--bg);
+    color: var(--ink);
+    font-family: var(--sans);
+    font-size: 17px;
+    line-height: 1.6;
+  }
+  a { color: inherit; }
+  .wrap { max-width: 1040px; margin: 0 auto; padding: 0 16px; }
+
+  /* ---------- hero ---------- */
+  .hero { background: var(--warm); border-bottom: 1px solid var(--line); }
+  .hero .wrap {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 28px;
+    padding-top: 56px;
+    padding-bottom: 56px;
+  }
+  @media (min-width: 820px) {
+    .hero .wrap { grid-template-columns: 1.4fr 1fr; align-items: center; }
+  }
+  .eyebrow {
+    font-size: 13px; letter-spacing: .12em; text-transform: uppercase;
+    font-weight: 700; color: var(--accent); margin: 0 0 14px;
+  }
+  h1 {
+    font-family: var(--serif);
+    font-weight: 700;
+    font-size: clamp(2.2rem, 5.4vw, 3.6rem);
+    line-height: 1.08;
+    letter-spacing: -0.02em;
+    margin: 0 0 18px;
+  }
+  .lede { font-size: 1.15rem; color: var(--muted); max-width: 34em; margin: 0 0 22px; }
+  .byline { font-size: 15px; color: var(--muted); margin: 0; }
+  .byline b { color: var(--ink); font-weight: 700; }
+  .hero svg { width: 100%; height: auto; max-width: 360px; justify-self: center; }
+
+
+  /* ---------- banner image ---------- */
+  .banner { margin: 0; border-bottom: 1px solid var(--line); background: var(--warm); }
+  .banner img {
+    display: block; width: 100%;
+    height: clamp(140px, 22vw, 260px);
+    object-fit: cover; object-position: center;
+  }
+
+  /* ---------- sections ---------- */
+  section { padding: 48px 0 8px; }
+  h2 {
+    font-family: var(--serif);
+    font-weight: 700;
+    font-size: 1.8rem;
+    letter-spacing: -0.01em;
+    margin: 0 0 8px;
+  }
+  .section-sub { color: var(--muted); margin: 0 0 24px; max-width: 40em; }
+
+  /* ---------- how it works ---------- */
+  .steps { display: grid; gap: 14px; grid-template-columns: 1fr; padding: 0; margin: 0; list-style: none; counter-reset: s; }
+  @media (min-width: 760px) { .steps { grid-template-columns: repeat(3, 1fr); } }
+  .steps li {
+    counter-increment: s;
+    background: var(--surface);
+    border: 1px solid var(--line);
+    border-radius: 14px;
+    padding: 18px 18px 16px;
+  }
+  .steps li::before {
+    content: counter(s);
+    display: inline-grid; place-items: center;
+    width: 30px; height: 30px; border-radius: 50%;
+    background: var(--accent); color: var(--accent-ink);
+    font-weight: 700; font-size: 15px; margin-bottom: 10px;
+  }
+  .steps h3 { margin: 0 0 4px; font-size: 1.05rem; }
+  .steps p { margin: 0; color: var(--muted); font-size: 15.5px; }
+  .tip {
+    margin: 16px 0 0; padding: 12px 16px;
+    background: var(--accent-soft); border-radius: 12px; font-size: 15.5px;
+  }
+
+  /* ---------- notebook cards ---------- */
+  .grid { display: grid; gap: 18px; grid-template-columns: 1fr; }
+  @media (min-width: 760px) { .grid { grid-template-columns: repeat(2, 1fr); } }
+  .card {
+    background: var(--surface);
+    border: 1px solid var(--line);
+    border-radius: 16px;
+    padding: 22px 22px 20px;
+    display: flex; flex-direction: column; gap: 12px;
+    transition: transform .15s ease, box-shadow .15s ease;
+  }
+  .card:hover { transform: translateY(-2px); box-shadow: 0 8px 24px rgba(0,0,0,.08); }
+  @media (prefers-reduced-motion: reduce) { .card { transition: none; } .card:hover { transform: none; } }
+  .card-head { display: flex; gap: 14px; align-items: baseline; }
+  .num {
+    font-family: var(--serif); font-weight: 700; font-size: 2.4rem; line-height: 1;
+    color: var(--accent);
+  }
+  .card h3 { margin: 0; font-family: var(--serif); font-size: 1.35rem; line-height: 1.2; }
+  .card p { margin: 0; color: var(--muted); font-size: 16px; }
+  .chips { display: flex; flex-wrap: wrap; gap: 6px; padding: 0; margin: 0; list-style: none; }
+  .chips li {
+    font-size: 13px; padding: 3px 10px; border-radius: 999px;
+    background: var(--accent-soft); font-weight: 500;
+  }
+  .meta { font-size: 14px; color: var(--muted); display: flex; flex-wrap: wrap; gap: 6px 14px; }
+  .badge {
+    font-weight: 700; font-size: 12px; letter-spacing: .04em; text-transform: uppercase;
+    border: 1px solid var(--line); padding: 2px 8px; border-radius: 6px; color: var(--ink);
+  }
+  .note { font-size: 14px; color: var(--muted); border-left: 3px solid var(--line); padding-left: 10px; }
+  .actions { display: flex; flex-wrap: wrap; gap: 10px; margin-top: auto; padding-top: 6px; }
+  .btn {
+    display: inline-block; text-decoration: none; font-weight: 700; font-size: 15px;
+    padding: 9px 16px; border-radius: 10px; border: 1.5px solid var(--accent);
+  }
+  .btn.primary { background: var(--accent); color: var(--accent-ink); }
+  .btn.ghost { color: var(--accent); }
+  .btn:hover { filter: brightness(1.08); }
+  .btn:focus-visible, a:focus-visible { outline: 3px solid var(--accent); outline-offset: 2px; }
+
+  /* ---------- about / footer ---------- */
+  .about { background: var(--surface); border: 1px solid var(--line); border-radius: 16px; padding: 22px; }
+  .about p { margin: 0 0 10px; }
+  .about p:last-child { margin: 0; }
+  footer { padding: 36px 0 56px; color: var(--muted); font-size: 14.5px; }
+  noscript p { background: var(--warm); padding: 12px 16px; border-radius: 10px; }
+</style>
+</head>
+<body>
+
+<header class="hero">
+  <div class="wrap">
+    <div>
+      <p class="eyebrow">Interactive notebooks &middot; Intro to AI</p>
+      <h1>Learn how AI works by changing it and watching what happens.</h1>
+      <p class="lede">Six hands-on notebooks that turn ideas like temperature, memory, similarity, neural networks and model evaluation into sliders, buttons and short decisions. Run them in your browser, with nothing to install by hand.</p>
+      <p class="byline">Built by <b>SzuLun (Zoey) Huang</b>, UC Berkeley Data Science, under the guidance of <b>Eric Van Dusen</b>.</p>
+    </div>
+    <!-- three sliders: the "change a setting, see a result" idea -->
+    <svg viewBox="0 0 360 260" role="img" aria-label="Three slider controls with their knobs at different positions">
+      <g fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" style="color: var(--ink); opacity:.28">
+        <line x1="30" y1="60"  x2="330" y2="60"/>
+        <line x1="30" y1="130" x2="330" y2="130"/>
+        <line x1="30" y1="200" x2="330" y2="200"/>
+      </g>
+      <g stroke="var(--accent)" stroke-width="5" stroke-linecap="round">
+        <line x1="30" y1="60"  x2="230" y2="60"/>
+        <line x1="30" y1="130" x2="120" y2="130"/>
+        <line x1="30" y1="200" x2="280" y2="200"/>
+      </g>
+      <g fill="var(--surface)" stroke="var(--accent)" stroke-width="5">
+        <circle cx="230" cy="60"  r="15"/>
+        <circle cx="120" cy="130" r="15"/>
+        <circle cx="280" cy="200" r="15"/>
+      </g>
+    </svg>
+  </div>
+</header>
+
+<figure class="banner">
+  <img src="hero-banner.jpg" width="2000" height="500"
+       alt="A robotic hand and a human hand reaching toward each other across a starry sky, painted in the style of a Renaissance fresco.">
+</figure>
+
+<main class="wrap">
+
+  <section aria-labelledby="how">
+    <h2 id="how">How to use a notebook</h2>
+    <p class="section-sub">Each notebook is self-contained. Open one, run it once, then play.</p>
+    <ol class="steps">
+      <li>
+        <h3>Open it</h3>
+        <p>Pick <b>Open in Colab</b> below, or use the JupyterHub link your instructor gave you.</p>
+      </li>
+      <li>
+        <h3>Run everything once</h3>
+        <p>JupyterHub: <b>Kernel &rarr; Restart Kernel and Run All Cells</b>.<br>Colab: <b>Runtime &rarr; Run all</b>.</p>
+      </li>
+      <li>
+        <h3>Play and explain</h3>
+        <p>Move the sliders, click the buttons, answer the questions, and say <em>why</em> you chose what you chose.</p>
+      </li>
+    </ol>
+    <p class="tip"><b>If something looks stuck:</b> refresh the page and run everything again. Run the cells from top to bottom rather than one at a time.</p>
+  </section>
+
+  <section aria-labelledby="nbs">
+    <h2 id="nbs">The notebooks</h2>
+    <p class="section-sub">Start anywhere. Each one takes a single idea and lets you test it.</p>
+    <div class="grid" id="grid"></div>
+    <noscript><p>This page needs JavaScript to show the notebook list. You can also browse the notebooks directly in the repository.</p></noscript>
+  </section>
+
+  <section aria-labelledby="about">
+    <h2 id="about">About this project</h2>
+    <div class="about">
+      <p>These notebooks are teaching materials for introductory AI courses, designed so that students without a programming background can still explore how models behave, compare results, and practise explaining their choices.</p>
+      <p>They were developed at UC Berkeley by SzuLun (Zoey) Huang under the guidance of Eric Van Dusen. Feedback and suggestions are welcome through the repository's issues.</p>
+    </div>
+  </section>
+
+</main>
+
+<footer>
+  <div class="wrap">Released under the license included in this repository.</div>
+</footer>
+
+<script>
+  // ---- Edit these if the repository or file names change -------------------
+  const CONFIG = { owner: "szulun", repo: "ai-notebooks", branch: "main" };
+  // On GitHub Pages (https://OWNER.github.io/REPO/) owner and repo are detected automatically.
+  if (location.hostname.endsWith(".github.io")) {
+    CONFIG.owner = location.hostname.split(".")[0];
+    const seg = location.pathname.split("/")[1];
+    if (seg) CONFIG.repo = seg;
+  }
+
+  const NOTEBOOKS = [
+    {
+      n: "01",
+      title: "Write with AI: Prompts, Settings, and Your Own Style",
+      file: "Write_with_AI.ipynb",
+      blurb: "Meet a small language model that runs on its own. Give it a persona, change settings such as temperature, compare what it writes, and check your understanding along the way.",
+      topics: ["Small language models", "Temperature", "Prompts and personas"],
+      platforms: ["JupyterHub", "Colab"],
+      note: "The first run on Colab takes about 2–4 minutes to set up."
+    },
+    {
+      n: "02",
+      title: "Why Does AI Forget? Building a Chat Assistant with Memory",
+      file: "Why_Does_AI_Forget.ipynb",
+      blurb: "Follow a developer building an AI study assistant that has to adapt to students at different levels. Find out why a model forgets, how system prompts shape its behavior, and what to do when a conversation gets too long.",
+      topics: ["System prompts", "Context windows", "Memory and tokens"],
+      platforms: ["JupyterHub", "Colab"],
+      note: "On Colab, the first run installs one package and downloads the language model (about 0.8 GB), roughly 3–5 minutes."
+    },
+    {
+      n: "03",
+      title: "How Does a Recommender Know What's “Similar”?",
+      file: "How_Does_a_Recommender_Work.ipynb",
+      blurb: "Sort out how AI, machine learning, deep learning and LLMs relate with a matching game, then build a small recommender that finds similar movies.",
+      topics: ["AI vs ML vs DL", "Clustering", "Similarity"],
+      platforms: ["JupyterHub", "Colab"],
+      time: "About 30 minutes (up to 45 with extensions)"
+    },
+    {
+      n: "04",
+      title: "Choosing the Right Model: Machine Learning vs. Deep Learning",
+      file: "Choosing_the_Right_Model.ipynb",
+      blurb: "Find out when traditional machine learning is not enough. See how a neural network learns, walk an interactive decision map of model families, and try a tiny convolution demo.",
+      topics: ["Neural networks", "Model families", "Convolution"],
+      platforms: ["JupyterHub", "Colab"],
+      time: "30–45 minutes for the core path"
+    },
+    {
+      n: "05",
+      title: "How Do Language Models Work? From Words to Answers",
+      file: "How_Do_Language_Models_Work.ipynb",
+      blurb: "Decide when simple rules are enough and when you need a language model. Follow text from tokens to embeddings to transformers, then watch a small model predict the next word.",
+      topics: ["Tokenization", "Transformers", "RAG", "Sentiment and NER"],
+      platforms: ["JupyterHub", "Colab"],
+      note: "On Colab, the first run installs one package and downloads the language model (about 0.8 GB), roughly 3–5 minutes."
+    },
+    {
+      n: "06",
+      title: "From Idea to Launch: Running an AI Project",
+      file: "From_Idea_to_Launch.ipynb",
+      blurb: "Walk through a whole AI project, from problem to deployment, for a newspaper trying to predict which articles go viral. Tune thresholds and see what precision and recall really trade off.",
+      topics: ["Problem scoping", "Overfitting", "Precision and recall", "Deployment"],
+      platforms: ["JupyterHub", "Colab"]
+    }
+  ];
+
+  const base = `https://github.com/${CONFIG.owner}/${CONFIG.repo}`;
+  const enc = encodeURIComponent;
+
+  function el(tag, props, children) {
+    const e = document.createElement(tag);
+    Object.entries(props || {}).forEach(([k, v]) => {
+      if (k === "class") e.className = v; else if (k === "text") e.textContent = v; else e.setAttribute(k, v);
+    });
+    (children || []).forEach(c => e.appendChild(c));
+    return e;
+  }
+
+  const grid = document.getElementById("grid");
+  NOTEBOOKS.forEach(nb => {
+    const colab = `https://colab.research.google.com/github/${CONFIG.owner}/${CONFIG.repo}/blob/${CONFIG.branch}/${enc(nb.file)}`;
+    const view  = `${base}/blob/${CONFIG.branch}/${enc(nb.file)}`;
+    const raw   = `https://raw.githubusercontent.com/${CONFIG.owner}/${CONFIG.repo}/${CONFIG.branch}/${enc(nb.file)}`;
+
+    const meta = el("div", { class: "meta" },
+      nb.platforms.map(p => el("span", { class: "badge", text: p }))
+        .concat(nb.time ? [el("span", { text: nb.time })] : []));
+
+    const actions = el("div", { class: "actions" });
+    if (!nb.noColab) {
+      actions.appendChild(el("a", { class: "btn primary", href: colab, target: "_blank", rel: "noopener",
+        "aria-label": `Open ${nb.title} in Google Colab`, text: "Open in Colab" }));
+    }
+    actions.appendChild(el("a", { class: "btn ghost", href: view, target: "_blank", rel: "noopener", text: "View on GitHub" }));
+    actions.appendChild(el("a", { class: "btn ghost", href: raw, download: nb.file, text: "Download" }));
+
+    const card = el("article", { class: "card" }, [
+      el("div", { class: "card-head" }, [
+        el("span", { class: "num", "aria-hidden": "true", text: nb.n }),
+        el("h3", { text: nb.title })
+      ]),
+      el("p", { text: nb.blurb }),
+      el("ul", { class: "chips" }, nb.topics.map(t => el("li", { text: t }))),
+      meta
+    ]);
+    if (nb.note) card.appendChild(el("p", { class: "note", text: nb.note }));
+    card.appendChild(actions);
+    grid.appendChild(card);
+  });
+</script>
+</body>
+</html>
