@@ -1,6 +1,6 @@
 # Hands-On AI Notebooks
 
-Six interactive notebooks that teach core AI ideas by letting students change a setting and watch what happens. They run in a browser on JupyterHub or Google Colab, with nothing to install by hand.
+Seven interactive notebooks that teach core AI ideas by letting students change a setting and watch what happens. They run in a browser on JupyterHub or Google Colab, with nothing to install by hand.
 
 Built by **SzuLun (Zoey) Huang**, UC Berkeley Data Science, under the guidance of **Eric Van Dusen**.
 
@@ -14,6 +14,7 @@ Built by **SzuLun (Zoey) Huang**, UC Berkeley Data Science, under the guidance o
 | 4 | [Choosing the Right Model: Machine Learning vs. Deep Learning](Choosing_the_Right_Model.ipynb) | Find out when traditional ML is not enough, see how a neural network learns, walk an interactive decision map of model families, and try a tiny convolution demo. | 30–45 min for the core path | JupyterHub, Colab |
 | 5 | [How Do Language Models Work? From Words to Answers](How_Do_Language_Models_Work.ipynb) | Decide when rules are enough and when a language model is needed. Follow text from tokens to embeddings to transformers, then watch a small model predict the next word. | See notebook | JupyterHub, Colab |
 | 6 | [From Idea to Launch: Running an AI Project](From_Idea_to_Launch.ipynb) | Walk through a full AI project, from problem to deployment, for a newspaper predicting viral articles. Tune thresholds and see what precision and recall trade off. | See notebook | JupyterHub, Colab |
+| 7 | [Let the Data Speak: Learn Data Visualization with Interactive Dashboards](Data_Visualization_Dashboard_Lab.ipynb) | Start from the question, then choose the chart. Build two California-based dashboards with interactive widgets (employee attrition, and retail revenue and profit), spot the problems in a bad dashboard, and practice telling whether a chart helps you think or misleads you. | See notebook | JupyterHub, Colab |
 
 ## Open in Colab
 
@@ -26,6 +27,7 @@ Built by **SzuLun (Zoey) Huang**, UC Berkeley Data Science, under the guidance o
 | Choosing the Right Model: Machine Learning vs. Deep Learning | [![Open in Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/szulun/ai-notebooks/blob/main/Choosing_the_Right_Model.ipynb) |
 | How Do Language Models Work? From Words to Answers | [![Open in Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/szulun/ai-notebooks/blob/main/How_Do_Language_Models_Work.ipynb) |
 | From Idea to Launch: Running an AI Project | [![Open in Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/szulun/ai-notebooks/blob/main/From_Idea_to_Launch.ipynb) |
+| Let the Data Speak: Learn Data Visualization with Interactive Dashboards | [![Open in Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/szulun/ai-notebooks/blob/main/Data_Visualization_Dashboard_Lab.ipynb) |
 
 The three notebooks that use a language model (*Write with AI*, *Why Does AI Forget?* and *How Do Language Models Work?*) set themselves up on Colab. The first run installs one package and downloads the model (about 0.8 GB), which takes roughly 3–5 minutes.
 
@@ -45,7 +47,11 @@ The three notebooks that use a language model (*Write with AI*, *Why Does AI For
 
 ## A note about the questions in the notebooks
 
-Each notebook has a short check at the start and a similar one at the end, plus a few quick prediction and quiz questions. Each notebook also ends with a short review game, just for practice. They are optional and nothing is graded. Answers are sent anonymously (a random code, no name or email) and are used only to learn whether the notebooks help and how to improve them.
+Each notebook has a short check at the start and a similar one at the end, plus a few quick prediction and quiz questions. Most notebooks also end with a short review game, just for practice. The quick questions are optional. In classes where your instructor asks for it, **the check at the end is required for credit**: answer every question and click Submit. It is not a repeat of the first check; it shows what you learned. Answers are sent anonymously (a random code, no name or email) and are used only to learn whether the notebooks help and how to improve them.
+
+## Languages
+
+The Data Visualization notebook also comes in Chinese: `資料視覺化與Dashboard_互動實驗室.ipynb`.
 
 ## License
 
